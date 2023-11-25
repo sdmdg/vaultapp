@@ -11,7 +11,7 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 
 * Dark mode with a user-friendly UI
 * Live previews and thumbnails for common media file types
-* AES-256 encryption
+* AES encryption
 
 ![img_2](https://github.com/sdmdg/vaultapp/assets/151946448/19e6293f-13f7-4144-80e9-dfb8b7e53e28)
 
@@ -34,7 +34,7 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 
 ## Installation
 
-1. Install Python 3.11 or above.
+1. Install Python 3.10 or above.
 2. Clone the repository to your desired location or download the ZIP and extract it.
 3. Recommended: Launch `run.bat`(for Windows). This will set up a new virtual environment and install all dependencies.
 
