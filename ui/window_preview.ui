@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>490</width>
+    <height>260</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>490</width>
+    <height>260</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>2000</width>
+    <height>2000</height>
+   </size>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::DefaultContextMenu</enum>
+  </property>
+  <property name="windowTitle">
+   <string>preview</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+background-color: rgb(30, 30, 30)
+
+}
+QLabel{
+color: rgb(200, 200, 200);
+background-color:rgba(0, 0, 0, 0)
+}
+
+QPushButton {
+background-color:rgb(40, 40, 40);
+color: rgb(200, 200, 200);
+border: 2px solid rgb(80, 80, 80);
+border-radius: 10px;
+padding: 1px;
+}
+QPushButton:hover {
+background-color:rgb(20, 115, 230);
+color: rgb(200, 200, 200);
+border: 1px solid rgb(20, 115, 230);
+}
+QPushButton:pressed {
+background-color:rgb(18, 100, 200);
+color: rgb(200, 200, 200);
+border: 1px solid rgb(18, 100, 200);
+}
+QPushButton:disabled {
+background-color:rgb(40, 40, 40);
+color: rgb(100, 100, 100);
+border: 2px solid rgb(50, 50, 50);
+border-radius: 10px;
+}
+
+QLineEdit{
+background-color:rgb(30, 30, 30);
+color: rgb(200, 200, 200);
+border: 2px solid rgb(20, 115, 230);
+border-radius: 10px;
+padding: 1px;
+}
+
+QProgressBar {
+background-color:rgb(30, 30, 30);
+border: 2px solid rgb(80, 80, 80);
+border-radius: 6px;
+color:rgb(200, 200, 200);
+text-align: center;
+}
+QProgressBar::chunk {
+background-color:rgb(20, 115, 230);
+border: 2px solid rgb(20, 115, 230);
+border-radius: 1px;
+}
+
+QGroupBox {
+color: rgb(200, 200, 200);
+background-color: rgb(20, 20, 20);
+border: 2px solid rgb(80, 80, 80);
+border-radius: 10px;
+}</string>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="preview_widget">
+   <widget class="QPushButton" name="btn_decrypt">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>190</y>
+      <width>70</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Decrypt</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_delete">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>190</y>
+      <width>60</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+background-color:rgb(40, 40, 40);
+color: rgb(200, 0, 10);
+border: 2px solid rgb(200, 0, 10);
+border-radius: 10px;
+padding: 1px;
+}
+QPushButton:hover {
+background-color:rgb(190, 0, 10);
+color: rgb(200, 200, 200);
+border: 1px solid rgb(190, 0, 10);
+}
+QPushButton:pressed {
+background-color:rgb(170, 0, 10);
+color: rgb(200, 200, 200);
+border: 1px solid rgb(170, 0, 10);
+}</string>
+    </property>
+    <property name="text">
+     <string>Delete</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="infoBox">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>30</y>
+      <width>200</width>
+      <height>150</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="title">
+     <string> Info </string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <widget class="QLabel" name="lb_name">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lb_date">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Date Created</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lb_size">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Size</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lb_type">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Item type</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lb_dimensions">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Dimensions</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lb_dimensions_2">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>100</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>: Unavailable</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lb_name_2">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>20</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lb_date_2">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>60</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Date Created</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lb_size_2">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>80</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Size</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lb_type_2">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>40</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Item type</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="image_label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>200</width>
+      <height>200</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
