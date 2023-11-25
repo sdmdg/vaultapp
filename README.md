@@ -3,7 +3,7 @@
 
 VaultApp is a secure and user-friendly application designed to safeguard your digital assets.
 
-![Logo](https://github.com/sdmdg/vaultapp/assets/151946448/e3c3f736-b5dd-43f0-ba89-2eb48e7d43f1)
+![Logo](https://github.com/sdmdg/vaultapp/assets/151946448/68282bff-03ca-4c43-877b-fd961e1763da)
 
 ![img_1](https://github.com/sdmdg/vaultapp/assets/151946448/d74206fd-15ea-4b0a-ac50-50ab567a8911)
 
