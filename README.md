@@ -22,8 +22,8 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 
 #### Preview Support :
 
-* Images - jpg,png,bmp,jpeg
-* Videos - mp4,avi,mkv (coming soon) 🙂
+* Images - jpg, png, bmp, jpeg
+* Videos - mp4, avi, mkv (coming soon) 🙂
 
 ## External Dependencies
 
@@ -34,9 +34,9 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 
 ## Installation
 
-#### 1. Install Python 3.
-#### 2. Clone the repository to your desired location or download the ZIP and extract it.
-#### 3. Recommended: Launch `run.bat`(for Windows). This will set up a new virtual environment and install all dependencies.
+1. Install Python 3.11 or above.
+2. Clone the repository to your desired location or download the ZIP and extract it.
+3. Recommended: Launch `run.bat`(for Windows). This will set up a new virtual environment and install all dependencies.
 
    **Or**
 
@@ -48,9 +48,9 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 
 ## Tutorial
 
-#### 1. Create a new password for the vault. The script will generate a new folder ('data') in your current directory, which stores all encrypted files when imported to the vault.
-#### 2. Import files to the vault.
-#### 3. Enjoy! 🙂
+1. Create a new password for the vault. The script will generate a new folder ('data') in your current directory, which stores all encrypted files when imported to the vault.
+2. Import files to the vault.
+3. Enjoy! 🙂
 
 **Note:** For enhanced data privacy, the application does not include an auto-update module. Once it installs all dependencies, it operates offline. Please visit [here](https://github.com/sdmdg/vaultapp/) to manually check for and install updates.
 
@@ -58,8 +58,8 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 
 ## Deleting the Vault
 
-#### 1. First, decrypt and move your files to a secure location.
-#### 2. Delete the 'data' folder.
+1. First, decrypt and move your files to a secure location.
+2. Delete the 'data' folder.
 
 
 ## Important Note:
