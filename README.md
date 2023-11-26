@@ -34,7 +34,7 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 
 ## Installation
 
-1. Install Python 3.10 or above.
+1. Install Python 3.11 or above.
 2. Clone the repository to your desired location or download the ZIP and extract it.
 3. Recommended: Launch `run.bat`(for Windows). This will set up a new virtual environment and install all dependencies.
 
