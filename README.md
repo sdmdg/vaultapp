@@ -7,6 +7,8 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 
 ![img_1](https://github.com/sdmdg/vaultapp/assets/151946448/d74206fd-15ea-4b0a-ac50-50ab567a8911)
 
+---
+
 ## Features
 
 * Dark mode with a user-friendly UI
@@ -31,6 +33,8 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 * opencv-python
 * numpy
 * cryptography (AES encryption)
+
+---
 
 ## Installation
 
@@ -61,6 +65,7 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 1. First, decrypt and move your files to a secure location.
 2. Delete the 'data' folder.
 
+---
 
 ## Important Note:
 
