@@ -5,7 +5,7 @@ Version 0.1.0
 Author: Malaka D.Gunawardana.
 
 Release Notes:
-- Version 1.0.0 (Initial Release) (2023/11/25)
+- Version 0.1.0 (Initial Release) (2023/11/25)
 
 For Updates and Contributions:
     Visit the GitHub repository:
