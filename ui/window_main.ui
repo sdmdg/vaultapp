@@ -13,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>1080</width>
-    <height>800</height>
+    <height>845</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,13 +25,13 @@
   <property name="minimumSize">
    <size>
     <width>1080</width>
-    <height>800</height>
+    <height>845</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>1080</width>
-    <height>800</height>
+    <height>845</height>
    </size>
   </property>
   <property name="cursor">
@@ -77,7 +77,15 @@ border: 2px solid rgb(50, 50, 50);
 border-radius: 10px;
 }
 
-QLineEdit{
+QLineEdit {
+background-color:rgb(30, 30, 30);
+color: rgb(200, 200, 200);
+border: 2px solid rgb(80, 80, 80);
+border-radius: 10px;
+padding: 1px;
+}
+
+QLineEdit:focus {
 background-color:rgb(30, 30, 30);
 color: rgb(200, 200, 200);
 border: 2px solid rgb(20, 115, 230);
@@ -96,7 +104,9 @@ QProgressBar::chunk {
 background-color:rgb(20, 115, 230);
 border: 2px solid rgb(20, 115, 230);
 border-radius: 1px;
-}</string>
+}
+
+</string>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
@@ -108,78 +118,11 @@ border-radius: 1px;
    <property name="styleSheet">
     <string notr="true"/>
    </property>
-   <widget class="QScrollArea" name="scroll_area">
-    <property name="geometry">
-     <rect>
-      <x>9</x>
-      <y>9</y>
-      <width>1061</width>
-      <height>741</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>1314</width>
-      <height>760</height>
-     </size>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
-    </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>1061</width>
-       <height>741</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QWidget{border-color: rgb(17, 17, 17);
-background-color: rgb(15, 15, 15);
-border-radius: 8px;}</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <layout class="QGridLayout" name="image_grid_layout">
-        <property name="leftMargin">
-         <number>5</number>
-        </property>
-        <property name="topMargin">
-         <number>5</number>
-        </property>
-        <property name="rightMargin">
-         <number>5</number>
-        </property>
-        <property name="bottomMargin">
-         <number>5</number>
-        </property>
-        <property name="spacing">
-         <number>15</number>
-        </property>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </widget>
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
       <x>7</x>
-      <y>750</y>
+      <y>780</y>
       <width>1061</width>
       <height>16</height>
      </rect>
@@ -201,7 +144,7 @@ border-radius: 8px;}</string>
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>770</y>
+      <y>800</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -243,7 +186,7 @@ border-radius: 8px;}</string>
     <property name="geometry">
      <rect>
       <x>990</x>
-      <y>770</y>
+      <y>800</y>
       <width>81</width>
       <height>23</height>
      </rect>
@@ -268,7 +211,7 @@ border-radius: 8px;}</string>
     <property name="geometry">
      <rect>
       <x>910</x>
-      <y>770</y>
+      <y>800</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -293,7 +236,7 @@ border-radius: 8px;}</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>770</y>
+      <y>800</y>
       <width>289</width>
       <height>21</height>
      </rect>
@@ -311,9 +254,9 @@ border-radius: 8px;}</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>770</y>
-      <width>81</width>
+      <x>740</x>
+      <y>800</y>
+      <width>61</width>
       <height>23</height>
      </rect>
     </property>
@@ -357,7 +300,7 @@ border-radius: 10px;
 </string>
     </property>
     <property name="text">
-     <string>Delete files</string>
+     <string>Delete</string>
     </property>
     <property name="flat">
      <bool>true</bool>
@@ -369,8 +312,8 @@ border-radius: 10px;
     </property>
     <property name="geometry">
      <rect>
-      <x>790</x>
-      <y>770</y>
+      <x>1038</x>
+      <y>10</y>
       <width>31</width>
       <height>23</height>
      </rect>
@@ -411,6 +354,346 @@ border-radius: 10px;
     </property>
     <property name="flat">
      <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QScrollArea" name="scroll_area_all">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>1061</width>
+      <height>741</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1314</width>
+      <height>760</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="widget_all">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>1061</width>
+       <height>741</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget{border-color: rgb(17, 17, 17);
+background-color: rgb(15, 15, 15);
+border-radius: 8px;}</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="grid_layout">
+        <property name="leftMargin">
+         <number>5</number>
+        </property>
+        <property name="topMargin">
+         <number>5</number>
+        </property>
+        <property name="rightMargin">
+         <number>5</number>
+        </property>
+        <property name="bottomMargin">
+         <number>5</number>
+        </property>
+        <property name="spacing">
+         <number>15</number>
+        </property>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="tab_btn_all">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>40</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+background-color:rgb(20, 20, 20);
+color: rgb(200, 200, 200);
+border:0px solid rgba(0, 0, 0, 0);
+border-radius: 4px;
+}
+QPushButton:hover {
+background-color:rgb(25, 25, 25);
+color: rgb(200, 200, 200);
+}
+QPushButton:pressed {
+background-color:rgb(15, 15, 15);
+color: rgb(200, 200, 200);
+}
+QPushButton:disabled {
+background-color:rgb(20, 20, 20);
+color: rgb(200, 200, 200);
+border:0px solid rgba(0, 0, 0, 0);
+border-bottom: 2px solid rgb(20, 115, 230);
+}
+</string>
+    </property>
+    <property name="text">
+     <string>All</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="tab_btn_images">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>20</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+background-color:rgb(20, 20, 20);
+color: rgb(200, 200, 200);
+border:0px solid rgba(0, 0, 0, 0);
+border-radius: 4px;
+}
+QPushButton:hover {
+background-color:rgb(25, 25, 25);
+color: rgb(200, 200, 200);
+}
+QPushButton:pressed {
+background-color:rgb(15, 15, 15);
+color: rgb(200, 200, 200);
+}
+QPushButton:disabled {
+background-color:rgb(20, 20, 20);
+color: rgb(200, 200, 200);
+border:0px solid rgba(0, 0, 0, 0);
+border-bottom: 2px solid rgb(20, 115, 230);
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Images</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="tab_btn_videos">
+    <property name="geometry">
+     <rect>
+      <x>124</x>
+      <y>20</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+background-color:rgb(20, 20, 20);
+color: rgb(200, 200, 200);
+border:0px solid rgba(0, 0, 0, 0);
+border-radius: 4px;
+}
+QPushButton:hover {
+background-color:rgb(25, 25, 25);
+color: rgb(200, 200, 200);
+}
+QPushButton:pressed {
+background-color:rgb(15, 15, 15);
+color: rgb(200, 200, 200);
+}
+QPushButton:disabled {
+background-color:rgb(20, 20, 20);
+color: rgb(200, 200, 200);
+border:0px solid rgba(0, 0, 0, 0);
+border-bottom: 2px solid rgb(20, 115, 230);
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Videos</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="tab_btn_documents">
+    <property name="geometry">
+     <rect>
+      <x>186</x>
+      <y>20</y>
+      <width>80</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+background-color:rgb(20, 20, 20);
+color: rgb(200, 200, 200);
+border:0px solid rgba(0, 0, 0, 0);
+border-radius: 4px;
+}
+QPushButton:hover {
+background-color:rgb(25, 25, 25);
+color: rgb(200, 200, 200);
+}
+QPushButton:pressed {
+background-color:rgb(15, 15, 15);
+color: rgb(200, 200, 200);
+}
+QPushButton:disabled {
+background-color:rgb(20, 20, 20);
+color: rgb(200, 200, 200);
+border:0px solid rgba(0, 0, 0, 0);
+border-bottom: 2px solid rgb(20, 115, 230);
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Documents</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="tab_btn_other">
+    <property name="geometry">
+     <rect>
+      <x>268</x>
+      <y>20</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+background-color:rgb(20, 20, 20);
+color: rgb(200, 200, 200);
+border:0px solid rgba(0, 0, 0, 0);
+border-radius: 4px;
+}
+QPushButton:hover {
+background-color:rgb(25, 25, 25);
+color: rgb(200, 200, 200);
+}
+QPushButton:pressed {
+background-color:rgb(15, 15, 15);
+color: rgb(200, 200, 200);
+}
+QPushButton:disabled {
+background-color:rgb(20, 20, 20);
+color: rgb(200, 200, 200);
+border:0px solid rgba(0, 0, 0, 0);
+border-bottom: 2px solid rgb(20, 115, 230);
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Other</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="input_search">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>10</y>
+      <width>201</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="accessibleDescription">
+     <string/>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>Search</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>1016</x>
+      <y>10</y>
+      <width>20</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_3">
+    <property name="geometry">
+     <rect>
+      <x>809</x>
+      <y>800</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
     </property>
    </widget>
   </widget>

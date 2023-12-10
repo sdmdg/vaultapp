@@ -1,11 +1,13 @@
 """
 VaultApp
-Version 0.1.0
+Version 0.1.21
 
 Author: Malaka D.Gunawardana.
 
 Release Notes:
-- Version 0.1.0 (Initial Release) (2023/11/25)
+- Version 0.1.21 (2023/12/10)
+    - UI fix and improvements
+    - Bug fix
 
 For Updates and Contributions:
     Visit the GitHub repository:
@@ -26,10 +28,12 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
+
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
+
 
 # Main Window
 
@@ -44,14 +48,25 @@ class VaultApp(QMainWindow):
         self.btn_import_files.clicked.connect(self.import_files)
         self.btn_about.clicked.connect(self.f_btn_about)
         self.btn_delete_files.clicked.connect(self.f_btn_delete_files)
+        self.input_search.textChanged.connect(lambda: self.f_search(self.input_search.text()))
+
+        self.tab_btn_all.clicked.connect(lambda: self.SyS_refresh(ask_password=False,category="all"))
+        self.tab_btn_images.clicked.connect(lambda: self.SyS_refresh(ask_password=False,category="image"))
+        self.tab_btn_videos.clicked.connect(lambda: self.SyS_refresh(ask_password=False,category="video"))
+        self.tab_btn_documents.clicked.connect(lambda: self.SyS_refresh(ask_password=False,category="document"))
+        self.tab_btn_other.clicked.connect(lambda: self.SyS_refresh(ask_password=False,category="other"))
+
+
+        self.show()
         self.load_files()
 
-    def load_files(self, ask_password=True, refresh=False):
-        global directory_path_data, directory_path, directory_path_export, password, config_path
-        global _encfileNames, _orfileNames, _selected_items
+    def load_files(self, ask_password=True, refresh=False, category="all"):
+        global directory_path_data, directory_path, password, config_path, current_view
+        global _encfileNames, _orfileNames, _selected_items, _files
 
         config_path = os.path.join(directory_path, "data", "config.bin")
         _selected_items = []
+        current_view = category
         self.btn_delete_files.setEnabled(False)
 
         # Scan data folder and get a list of image files in the directory
@@ -59,32 +74,42 @@ class VaultApp(QMainWindow):
 
         # Input password
         if ask_password:
-            if os.path.exists(config_path): msg="Enter your password :"
-            else: msg="Create a new password :"
-            custom_input_dialog = SyS_InputDialog(title="Input Password", msg=msg, ispassword=True)
+            if os.path.exists(config_path): 
+                msg="Enter your password :"
+                password_confirm = False
+            else: 
+                msg="Create a new password : (Min 6 characters)"
+                password_confirm = True
+            custom_input_dialog = SyS_InputDialog(title="Input Password", msg=msg, ispassword=True, password_confirm=password_confirm)
+
             result = custom_input_dialog.exec_()
             if result == QDialog.Accepted:
                 if custom_input_dialog.input.text() != "":
                     password = custom_input_dialog.input.text()
                 else:exit()
             else:exit()
-
-        self.show()
         
+
         # Get orginal file names
         _encfileNames, _orfileNames = self.SyS_load_config()
-        
+
         if first_run:
             custom_input_dialog = SyS_InfoDialog(title="Welcome", msg="  To remove this vault, please proceed by deleting\n  the associated data folder.").exec_()
             self.f_btn_about()
 
-        # UI
+
         if not refresh: self.btn_decrypt_files.clicked.connect(lambda: self.export_files(_files=[], ask_permission=True, all_files=True))
+
+        # Process files
+        self.f_GUI_grid_manager(_files, category)
+
+    def f_GUI_grid_manager(self, _files, category):
+
         self.progress_bar.setVisible(True)
 
         # Clear existing widgets
-        for i in reversed(range(self.image_grid_layout.count())):
-            self.image_grid_layout.itemAt(i).widget().setParent(None)
+        for i in reversed(range(self.grid_layout.count())):
+            self.grid_layout.itemAt(i).widget().setParent(None)
 
         # Process files
         row,col,progress = 1,0,0
@@ -104,13 +129,19 @@ class VaultApp(QMainWindow):
                 self.progress_bar.setValue(progress)
                 progress += int(100/len(_files))
 
+                # Get file path and type
+                file_path = os.path.join(directory_path_data, _file)
+                _file_type = self.SyS_filetype(_file_ext).lower()
+
+                if category == _file_type or category == "all":
+                    None
+                else:
+                    continue
+
                 # Create a QLabel for each file
                 image_label = QLabel(self)
                 image_label.setAlignment(Qt.AlignCenter)
 
-                # Get file path and type
-                file_path = os.path.join(directory_path_data, _file)
-                _file_type = self.SyS_filetype(_file_ext).lower()
                 if (_file_type == "image") or (_file_type == "video"):
                     # Load and display the image in the QLabel
                     try:
@@ -159,30 +190,71 @@ class VaultApp(QMainWindow):
                 image_chkbox.stateChanged.connect(lambda state, path=file_path, file=_file, name=_orfilename, :  self.f_checkbox_changed(path, file, name))
 
                 # Add elements to the grid layout
-                self.image_grid_layout.addWidget(image_label, row, col)
-                self.image_grid_layout.addWidget(name_label, row, col)
-                self.image_grid_layout.addWidget(image_chkbox, row, col, alignment=Qt.AlignmentFlag.AlignBottom)
+                self.grid_layout.addWidget(image_label, row, col)
+                self.grid_layout.addWidget(name_label, row, col)
+                self.grid_layout.addWidget(image_chkbox, row, col, alignment=Qt.AlignmentFlag.AlignBottom)
                 col += 1
                 if col == 4:
                     col = 0
                     row += 1
-        else:
-            pass
+                    
         # Fix grid errors for low content
-        if len(_files) <= 12:
-            for i in range(12-len(_files)):
+        if int(self.grid_layout.count()/3) <= 16:
+            for i in range(16-int(self.grid_layout.count()/3)):
                 dummy_label = QLabel(self)
                 dummy_label.setMinimumHeight(200)
                 dummy_label.setMinimumWidth(200)
                 dummy_label.setStyleSheet("""background-color: rgba(0, 0, 0, 0);""")
-                self.image_grid_layout.addWidget(dummy_label, row, col)
+                self.grid_layout.addWidget(dummy_label, row, col)
                 col += 1
                 if col == 4:
                     col = 0
                     row += 1
         # UI
         self.progress_bar.setVisible(False)
-    
+        self.f_update_tabs(category)
+        self.scroll_area_all.setStyleSheet("""  QScrollBar {border: 1px solid #252525;background: #191919;border-radius: 5px;}
+                                                QScrollBar:horizontal {height: 15px;margin: 0px 0px 0px 32px;}
+                                                QScrollBar:vertical {width: 15px;margin: 32px 0px 0px 0px;}
+                                                QScrollBar::handle {background: #252525;border: 1px solid #252525;border-radius: 4px;}
+                                                QScrollBar::handle:horizontal {border-width: 0px 1px 0px 1px;}
+                                                QScrollBar::handle:vertical {border-width: 1px 0px 1px 0px;}
+                                                QScrollBar::handle:horizontal {min-width: 20px;}
+                                                QScrollBar::handle:vertical {min-height: 20px;}
+                                                QScrollBar::add-line, QScrollBar::sub-line {background:#252525;border: 1px solid #252525;subcontrol-origin: margin;border-radius: 4px;}
+                                                QScrollBar::add-line {position: absolute;}
+                                                QScrollBar::add-line:horizontal {width: 15px;subcontrol-position: left;left: 15px;}
+                                                QScrollBar::add-line:vertical {height: 15px;subcontrol-position: top;top: 15px;}
+                                                QScrollBar::sub-line:horizontal {width: 15px;subcontrol-position: top left;}
+                                                QScrollBar::sub-line:vertical {height: 15px;subcontrol-position: top;}
+                                                QScrollBar:left-arrow, QScrollBar::right-arrow, QScrollBar::up-arrow, QScrollBar::down-arrow {border: 1px solid #5A5A5A;width: 3px;height: 3px;}
+                                                QScrollBar::add-page, QScrollBar::sub-page {background: none;}""")
+
+    def f_search(self, keyword):
+        if keyword == "":
+            self.f_GUI_grid_manager(_files, category=current_view)
+            return
+
+        _search_results = []
+        for _name in _orfileNames:
+            if keyword in _name:
+                id = _orfileNames.index(_name)
+                _search_results.append(_encfileNames[id])
+        self.f_GUI_grid_manager(_search_results, category=current_view)
+
+    def f_update_tabs(self, category, search=False):
+        self.tab_btn_all.setEnabled(True)
+        self.tab_btn_images.setEnabled(True)
+        self.tab_btn_videos.setEnabled(True)
+        self.tab_btn_documents.setEnabled(True)
+        self.tab_btn_other.setEnabled(True)
+        if not search:
+            if category == "all": self.tab_btn_all.setEnabled(False)
+            elif category == "image": self.tab_btn_images.setEnabled(False)
+            elif category == "video": self.tab_btn_videos.setEnabled(False)
+            elif category == "document": self.tab_btn_documents.setEnabled(False)
+            elif category == "other": self.tab_btn_other.setEnabled(False)
+
     def f_btn_delete_files(self):
         # function of btn_delete_files
         self.SyS_delete_files(_selected_items, ask_permission=True)
@@ -250,6 +322,11 @@ class VaultApp(QMainWindow):
         
         # UI
         self.preview_window.setGeometry(300, 100, pixmap.width()+60+230, (pixmap.height()+60))
+        self.preview_window.setMaximumWidth(pixmap.width()+60+230)
+        self.preview_window.setMaximumHeight(pixmap.height()+60)
+        self.preview_window.setMinimumWidth(pixmap.width()+60+230)
+        self.preview_window.setMinimumHeight(pixmap.height()+60)
+        
         self.preview_window.image_label.setPixmap(pixmap)
         self.preview_window.image_label.setGeometry(30, 30, pixmap.width(), pixmap.height())
         self.preview_window.infoBox.setGeometry(pixmap.width()+60, 30, 200, 150)
@@ -281,17 +358,7 @@ class VaultApp(QMainWindow):
                 file_type = self.SyS_filetype(file.split(".")[-1])
                 
                 # Generate secure file names
-                while True:
-                    # Fix same name
-                    encrypted_file_name = secrets.token_urlsafe(16) + ".enc"
-                    if encrypted_file_name not in _encfileNames:break
-                i = 0
-                tmp = "".join(orginal_file_name.split(".")[:-1])
-                while True:
-                    i += 1
-                    if orginal_file_name in _orfileNames: orginal_file_name = tmp + "_" + str(i) + "." + file_ext
-                    else: break
-                del i, tmp
+                orginal_file_name, encrypted_file_name = self.SyS_chkfilename(orginal_file_name, file_ext)
 
                 # Update config
                 config_data.append(encrypted_file_name + "<?/?>" + orginal_file_name)
@@ -352,7 +419,7 @@ class VaultApp(QMainWindow):
             # UI
             self.SyS_refresh(ask_password=False)
 
-    def export_files(self, _files, ask_permission=True, all_files=False):
+    def export_files(self, _files, directory_path_export="", ask_permission=True, all_files=False):
         global _encfileNames, _orfileNames
 
         # Export checked files
@@ -366,7 +433,11 @@ class VaultApp(QMainWindow):
                 dialog = SyS_MsgBoxDialog(title="Warning !!!", msg="You're going to decrypt " + str(len(_files)) + " file(s) from this vault.\nAre you sure?")
                 result = dialog.exec_()
                 if result == QDialog.Accepted:
-                    self.export_files(_files, ask_permission=False)
+                    options = QFileDialog.Options()
+                    directory_path_export = QFileDialog.getExistingDirectory(self, options=options)
+                    if not directory_path_export:pass
+                    else:
+                        self.export_files(_files, directory_path_export, ask_permission=False)
                 else: pass
             else:
                 progress = 0
@@ -393,7 +464,7 @@ class VaultApp(QMainWindow):
                 
                 # UI
                 self.progress_bar.setVisible(False)
-                dialog = SyS_MsgBoxDialog(title="Success", msg="Decryption complete, Check the export folder.\nDo you want to delete this file(s) from Vault?", clr_btn_yes=True)
+                dialog = SyS_MsgBoxDialog(title="Success", msg="Decryption complete, Check the export folder.\nDo you want to remove this file(s) from Vault?", clr_btn_yes=True)
                 result = dialog.exec_()
                 if result == QDialog.Accepted:
                     self.SyS_delete_files(_files, ask_permission=False)
@@ -408,12 +479,28 @@ class VaultApp(QMainWindow):
         # Common file types
         if ext.lower() in ("jpg,png,bmp,jpeg"): return "image"
         elif ext.lower() in ("mp4,avi,mkv"): return "video"
-        elif ext.lower() in ("exe,dll,py"): return "Application"
-        elif ext.lower() in ("rar,zip,7zip"): return "Compressed"
-        elif ext.lower() in ("mp3,ogg,wav"): return "Audio"
-        elif ext.lower() in ("doc,docx,pdf,txt,ppt,xls,ppt,csv"): return "Document"
-        elif ext.lower() in ("html,mhtml,css"): return "WebPage"
+        elif ext.lower() in ("exe,dll,py"): return "application"
+        elif ext.lower() in ("rar,zip,7zip"): return "compressed"
+        elif ext.lower() in ("mp3,ogg,wav"): return "audio"
+        elif ext.lower() in ("doc,docx,pdf,txt,ppt,xls,ppt,csv"): return "document"
+        elif ext.lower() in ("html,mhtml,css"): return "webpage"
         else: return "other"
+
+    def SyS_chkfilename(self, orginal_file_name, file_ext):
+        # Generate secure file names
+        while True:
+            # Fix same name
+            encrypted_file_name = secrets.token_urlsafe(16) + ".enc"
+            if encrypted_file_name not in _encfileNames:break
+        i = 0
+        tmp = "".join(orginal_file_name.split(".")[:-1])
+        while True:
+            if orginal_file_name in _orfileNames:
+                i += 1
+                orginal_file_name = tmp + "_" + str(i) + "." + file_ext
+            else: break
+        del i, tmp
+        return orginal_file_name, encrypted_file_name
 
     def SyS_chkdirs(self, *paths):
         # Check dirs
@@ -486,7 +573,7 @@ class VaultApp(QMainWindow):
             # UI
             self.SyS_refresh(ask_password=False)
 
-    def SyS_refresh(self, ask_password=True):
+    def SyS_refresh(self, ask_password=True, category="all"):
         # UI
         try:self.preview_window.close()
         except:pass
@@ -494,7 +581,7 @@ class VaultApp(QMainWindow):
         except:pass
         self.progress_bar.setVisible(True)
         # Reload files
-        self.load_files(ask_password, refresh=True)
+        self.load_files(ask_password, refresh=True, category=category)
 
 
     # Cryptography
@@ -618,7 +705,7 @@ class VaultApp(QMainWindow):
 # System Dialogs
 
 class SyS_InputDialog(QDialog):   
-    def __init__(self, parent=None, title="title", msg="msg", ispassword=False):
+    def __init__(self, parent=None, title="title", msg="msg", msg2="Confirm password :", ispassword=False, password_confirm=False):
         super(SyS_InputDialog, self).__init__(parent)
         # Display the password window
         self = uic.loadUi(resource_path('ui/dlg_input.ui'), self)
@@ -628,10 +715,31 @@ class SyS_InputDialog(QDialog):
         self.text.setText(msg)
         if ispassword:
             self.input.setEchoMode(QLineEdit.Password)
+            if password_confirm:
+                self.btn_ok.setEnabled(False)
+                self.text_2.setText(msg2)
+                self.input_2.setEchoMode(QLineEdit.Password)
+
+                self.input.textChanged.connect(self.chk_password)
+                self.input_2.textChanged.connect(self.chk_password)
+            else:
+                self.input_2.setVisible(False)
+                self.text_2.setVisible(False)
+                self.setMinimumHeight(120)
+                self.setMaximumHeight(120)
+                self.btn_ok.setGeometry(130,80,75,23)
+                self.btn_cancel.setGeometry(210,80,75,23)
+
         self.btn_ok.clicked.connect(self.accept)
-        self.btn_ok.setDefault(True)
         self.btn_cancel.clicked.connect(self.reject)
+        self.btn_ok.setDefault(True)
         self.show()
+
+    def chk_password(self):
+        if self.input.text() == self.input_2.text() and self.input.text()!= "" and len(self.input.text())>=6:
+            self.btn_ok.setEnabled(True)
+        else:
+            self.btn_ok.setEnabled(False)
 
 class SyS_MsgBoxDialog(QDialog):   
     def __init__(self, parent=None, title="title", msg="msg", clr_btn_yes=False, clr_btn_no=False, btn_no_default=True, btn_yes_default=False):
@@ -709,10 +817,11 @@ if __name__ == '__main__':
     # Check for directories and fix
     directory_path = os.getcwd()
     directory_path_data = os.path.join(directory_path, "data")
-    directory_path_export = os.path.join(directory_path, "export")
-    VaultApp.SyS_chkdirs(None, directory_path_data, directory_path_export)
+    VaultApp.SyS_chkdirs(None, directory_path_data)
+    if not os.path.exists(os.path.join(directory_path, "data", "! DO NOT modify or delete these files !")):
+        with open(os.path.join(directory_path, "data", "! DO NOT modify or delete these files !"), "+w") as f:f.write("! DO NOT modify or delete these files !\n")
 
     # INFO
-    App_version = "0.1.0"
+    App_version = "0.1.21"
     VaultApp()
     sys.exit(app.exec_())

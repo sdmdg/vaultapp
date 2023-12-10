@@ -5,7 +5,7 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 
 ![Logo](https://github.com/sdmdg/vaultapp/assets/151946448/68282bff-03ca-4c43-877b-fd961e1763da)
 
-![img_1](https://github.com/sdmdg/vaultapp/assets/151946448/d74206fd-15ea-4b0a-ac50-50ab567a8911)
+![img_1](https://github.com/sdmdg/vaultapp/assets/151946448/a5da6b4a-49b8-48d2-8bc1-7604353dd7db)
 
 ---
 
@@ -13,11 +13,12 @@ VaultApp is a secure and user-friendly application designed to safeguard your di
 
 * Dark mode with a user-friendly UI
 * Live previews and thumbnails for common media file types
+   - All previews processed in RAM. This approach guarantees the confidentiality of your data.
 * AES encryption
 
-![img_2](https://github.com/sdmdg/vaultapp/assets/151946448/19e6293f-13f7-4144-80e9-dfb8b7e53e28)
+![img_2](https://github.com/sdmdg/vaultapp/assets/151946448/eb1405f0-8135-456b-9193-c7341a313b93)
 
-![img_3](https://github.com/sdmdg/vaultapp/assets/151946448/3d8be3cf-9905-4d8c-84fe-3acb78aed423)
+![img_3](https://github.com/sdmdg/vaultapp/assets/151946448/d900087c-46bc-42e2-ab01-d8c91d5a8156)
 
 
 **Note:** The preview video functionality is currently unavailable. We are actively working on implementing this feature and expect it to be available soon. Thank you for your patience. 🙂
