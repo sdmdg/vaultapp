@@ -237,7 +237,7 @@ class VaultApp(QMainWindow):
 
         _search_results = []
         for _name in _orfileNames:
-            if keyword in _name:
+            if keyword.lower() in _name.lower():
                 id = _orfileNames.index(_name)
                 _search_results.append(_encfileNames[id])
         self.f_GUI_grid_manager(_search_results, category=current_view)
@@ -464,7 +464,7 @@ class VaultApp(QMainWindow):
                 
                 # UI
                 self.progress_bar.setVisible(False)
-                dialog = SyS_MsgBoxDialog(title="Success", msg="Decryption complete, Check the export folder.\nDo you want to remove this file(s) from Vault?", clr_btn_yes=True)
+                dialog = SyS_MsgBoxDialog(title="Success", msg="Decryption complete.\nDo you want to remove this file(s) from Vault?", clr_btn_yes=True)
                 result = dialog.exec_()
                 if result == QDialog.Accepted:
                     self.SyS_delete_files(_files, ask_permission=False)
